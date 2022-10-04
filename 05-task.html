@@ -10,7 +10,7 @@
 <body>
     <h2>Email адреса пользователей</h2>
     <p id="emailAddressesOutput">
-    
+
     </p>
     <h2>Пользователь, у которого больше всего друзей</h2>
     <p id="greatesFriendsCountOutput"></p>
@@ -476,31 +476,38 @@
                 favoriteFruit: 'apple'
             }
         ];
-        let emailAddressesOutput = document.querySelector("#emailAddressesOutput"),
-            greatesFriendsCountOutput = document.querySelector("#greatesFriendsCountOutput"),
-            greatestBalanceCompanyOutput = document.querySelector("#greatestBalanceCompanyOutput"),
-            lowestBalanceCompanyOutput = document.querySelector("#lowestBalanceCompanyOutput");
+        
+        let emailAddressesOutput = document.querySelector("#emailAddressesOutput");
+        
         function showAllEmails() {
-            let output = "";
-            users.forEach(user => output += user.email + "<br />");
-            emailAddressesOutput.innerHTML = output;
+            console.log("Электронные адреса пользователей:")
+            let outpuy="";
+            users.forEach(user => outpuy+=user.email + "<br>");
+            emailAddressesOutput.innerHTML=outpuy;
         }
+        let greatesFriendsCountOutput=document.querySelector("#greatesFriendsCountOutput");
+        let outputFriends= "";
         function showHigestFriendCount() {
-            let output = "";
+            console.log("Пользователи с наибольшим количеством друзей");
+
             let max = Number.MIN_VALUE;
+
             users.forEach(user => {
                 if (max < user.friends.length)
                     max = user.friends.length;
             });
+
             users
                 .filter(user => user.friends.length == max)
-                .forEach(user => output += user.name.first + " " + user.name.last + "<br>");
-
-            greatesFriendsCountOutput.innerHTML = output;
+                .forEach(user => outputFriends+=user.name.first + " " + user.name.last+"<br>");
+                greatesFriendsCountOutput.innerHTML=outputFriends;
         }
+        let greatestBalanceCompanyOutput= document.querySelector("#greatestBalanceCompanyOutput");
+        let lowestBalanceCompanyOutput=document.querySelector("#lowestBalanceCompanyOutput");
         function showMinMaxBalance() {
             let minBalance = Number.MAX_VALUE;
             let maxBalance = Number.MIN_VALUE;
+
             users.forEach(user => {
                 const currentBalance = +user.balance;
                 if (currentBalance > maxBalance)
@@ -509,14 +516,18 @@
                     minBalance = currentBalance;
                 }
             });
+
+            // console.log("Компании пользователей с наибольшим балансом:")
             users
                 .filter(user => user.balance == maxBalance)
-                .forEach(user => greatestBalanceCompanyOutput.textContent = user.company);
+                .forEach(user => greatestBalanceCompanyOutput.innerHTML+= user.company);
 
+            console.log("Компании пользователей с наименьшим балансом:")
             users
                 .filter(user => user.balance == minBalance)
-                .forEach(user => lowestBalanceCompanyOutput.textContent = user.company);
+                .forEach(user => lowestBalanceCompanyOutput.innerHTML+=user.company);
         }
+
         showAllEmails();
         showHigestFriendCount();
         showMinMaxBalance();
